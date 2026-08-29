@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "c",
+  "slug": "c-programming",
+  "title": "آموزش زبان برنامه نویسی C",
+  "titleEn": "C Programming",
+  "academy": "AS Academy",
+  "language": "fa",
+  "programmingLanguage": "C",
+  "standard": "C23",
+  "levels": [
+    "fundamentals",
+    "beginner",
+    "advanced",
+    "professional"
+  ],
+  "core": {
+    "repository": "as-academy-core",
+    "usesSharedArchitecture": true,
+    "sharedCapabilities": [
+      "navigation",
+      "design-system",
+      "progress",
+      "quiz",
+      "exercise",
+      "search",
+      "bookmark",
+      "settings",
+      "content-engine",
+      "course-contract"
+    ]
+  },
+  "courseCapabilities": [
+    "c-code-examples",
+    "compiler-guides",
+    "memory-lessons",
+    "systems-programming",
+    "embedded-c",
+    "c23"
+  ]
+}
