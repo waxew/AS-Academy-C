@@ -1,0 +1,32 @@
+{
+  "lessons": [
+    {"id":"c-001","module":"intro","title":"C چیست؟","topics":["کاربردها","تاریخچه","C89 تا C23","کامپایلر"]},
+    {"id":"c-002","module":"setup","title":"نصب محیط توسعه","topics":["GCC","Clang","VS Code","Windows","Linux","macOS"]},
+    {"id":"c-003","module":"build-pipeline","title":"از سورس تا فایل اجرایی","topics":["preprocessor","compiler","assembler","linker"]},
+    {"id":"c-004","module":"syntax-types","title":"Syntax و انواع داده","topics":["variables","constants","integer","floating","char","bool"]},
+    {"id":"c-005","module":"io-operators","title":"ورودی، خروجی و عملگرها","topics":["printf","scanf","arithmetic","comparison","logical"]},
+    {"id":"c-006","module":"control-flow","title":"کنترل جریان","topics":["if","switch","for","while","do while"]},
+    {"id":"c-007","module":"functions","title":"توابع","topics":["prototype","parameters","return","scope","recursion"]},
+    {"id":"c-008","module":"arrays-strings","title":"آرایه و رشته","topics":["arrays","multidimensional","char arrays","string.h"]},
+    {"id":"c-009","module":"pointers","title":"Pointer","topics":["address","dereference","pointer arithmetic","const pointers"]},
+    {"id":"c-010","module":"struct-union-enum","title":"انواع داده ترکیبی","topics":["struct","union","enum","typedef"]},
+    {"id":"c-011","module":"files","title":"کار با فایل","topics":["FILE","fopen","fclose","text","binary"]},
+    {"id":"c-012","module":"preprocessor-modules","title":"Preprocessor و پروژه چندفایلی","topics":["include","define","guards","headers","translation units"]},
+    {"id":"c-013","module":"dynamic-memory","title":"حافظه پویا","topics":["malloc","calloc","realloc","free","ownership"]},
+    {"id":"c-014","module":"advanced-pointers","title":"Pointer پیشرفته","topics":["function pointer","callback","pointer to pointer","generic APIs"]},
+    {"id":"c-015","module":"memory-model","title":"مدل حافظه و UB","topics":["stack","heap","lifetime","alignment","undefined behavior"]},
+    {"id":"c-016","module":"bitwise","title":"برنامه نویسی Bitwise","topics":["and","or","xor","shift","masks","flags"]},
+    {"id":"c-017","module":"build-systems","title":"Build System","topics":["Makefile","CMake","libraries","static","shared"]},
+    {"id":"c-018","module":"debug-sanitize-test-profile","title":"کیفیت و عیب یابی","topics":["GDB","LLDB","ASan","UBSan","unit tests","profiling"]},
+    {"id":"c-019","module":"c23","title":"C23","topics":["modern C","nullptr","typeof","attributes","standard changes"]},
+    {"id":"c-020","module":"data-structures","title":"ساختمان داده","topics":["dynamic array","linked list","stack","queue","hash table","tree"]},
+    {"id":"c-021","module":"algorithms","title":"الگوریتم ها","topics":["search","sort","complexity","recursion","iteration"]},
+    {"id":"c-022","module":"posix","title":"System Programming و POSIX","topics":["process","signals","pipes","filesystem","environment"]},
+    {"id":"c-023","module":"concurrency","title":"Concurrency","topics":["threads","mutex","atomic","race condition","deadlock"]},
+    {"id":"c-024","module":"networking","title":"Socket Programming","topics":["TCP","UDP","client","server","protocols"]},
+    {"id":"c-025","module":"embedded","title":"Embedded C","topics":["volatile","registers","memory mapped IO","interrupt concepts","resource constraints"]},
+    {"id":"c-026","module":"abi-ffi","title":"ABI و FFI","topics":["calling convention","layout","linkage","C interoperability"]},
+    {"id":"c-027","module":"secure-c","title":"Secure C","topics":["bounds","integer safety","input validation","resource safety","defensive programming"]},
+    {"id":"c-028","module":"capstone","title":"پروژه نهایی","topics":["architecture","modules","tests","documentation","release"]}
+  ]
+}
