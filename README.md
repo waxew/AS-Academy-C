@@ -1,75 +1,98 @@
 # AS Academy - C Programming
 
-مرجع آموزشی جامع زبان برنامه نویسی C از سطح مبانی تا تخصصی.
+دوره فارسی جامع زبان C از مبانی تا برنامه نویسی تخصصی سیستم، شبکه و Embedded.
 
-## مسیر آموزشی
+**Course version:** 1.0.0  
+**Target standard:** C23  
+**Core contract:** AS-Academy-Core / content schema v1
 
-1. مبانی
-2. مقدماتی
-3. پیشرفته
-4. تخصصی
-5. تمرین ها
-6. پروژه های عملی
+## مسیر دوره
 
-## سرفصل های اصلی
+- مبانی: Toolchain، Syntax، Type، I/O، Operator، Control Flow
+- مقدماتی: Function، Array، String، Pointer، Struct، File، Preprocessor
+- پیشرفته: Dynamic Memory، Function Pointer، Memory Model، Bitwise، Make/CMake، Debug/Test/Profile
+- تخصصی: C23، Data Structures، Algorithms، POSIX، Concurrency، Networking، Embedded C، ABI/FFI، Secure C و Capstone
 
-- معرفی زبان C و تاریخچه آن
-- نصب و راه اندازی محیط توسعه
-- ساختار برنامه و کامپایل
-- متغیرها و انواع داده
-- عملگرها و ورودی/خروجی
-- شرط ها و حلقه ها
-- توابع و Scope
-- آرایه ها و رشته ها
-- Pointerها و مدیریت حافظه
-- Struct / Union / Enum
-- کار با فایل ها
-- Preprocessor و Headerها
-- پروژه های چندفایلی
-- Function Pointer
-- Undefined Behavior و برنامه نویسی امن
-- Bitwise Programming
-- Make و CMake
-- Debugging و Sanitizers
-- Concurrency
-- مباحث C23
-- ساختمان داده و الگوریتم
-- POSIX و System Programming
-- Socket Programming
-- Embedded C
-- ABI و FFI
-- Testing و Profiling
+## وضعیت نسخه 1.0
 
-## استاندارد دوره
+- 4 سطح آموزشی
+- 28 ماژول اصلی
+- 28 Lesson entry
+- Quiz bank اولیه
+- 12 تمرین درجه بندی شده
+- 12 پروژه مرحله ای
+- Glossary تخصصی
+- مثال های C کامنت گذاری شده
+- CMake و Make build
+- CI برای GCC و Clang
+- مستند نصب و Toolchain
+- مستند اتصال به AS Academy Core
 
-مبنای اصلی مطالب جدید C23 است و تفاوت های مهم نسخه های C89/C90، C99، C11 و C17 نیز در طول دوره بررسی می شوند.
-
-## ساختار Repository
+## ساختار
 
 ```text
 AS-Academy-C/
-├── README.md
+├── .github/workflows/ci.yml
+├── content/
+│   ├── catalog.json
+│   ├── lessons.json
+│   ├── quizzes.json
+│   ├── exercises.json
+│   ├── projects.json
+│   └── glossary.json
 ├── docs/
+│   ├── COURSE-ROADMAP.md
+│   ├── CORE-INTEGRATION.md
+│   └── INSTALLATION.md
 ├── examples/
 │   ├── fundamentals/
 │   ├── beginner/
 │   ├── advanced/
 │   └── professional/
-├── exercises/
-├── projects/
-└── resources/
+├── CMakeLists.txt
+├── Makefile
+├── manifest.json
+├── course.json
+├── CONTRIBUTING.md
+└── VERSION
 ```
 
-## کامپایل پیشنهادی
+## Build
+
+با CMake:
+
+```bash
+cmake -S . -B build
+cmake --build build
+```
+
+یا با Make:
+
+```bash
+make
+make run
+```
+
+برای یک فایل مستقل:
 
 ```bash
 gcc -std=c23 -Wall -Wextra -Wpedantic main.c -o app
 ```
 
-## معماری AS Academy
+## ارتباط با AS-Academy-Core
 
-این Repository فقط محتوای اختصاصی دوره C را نگهداری می کند. هسته، معماری مشترک، Design System، Navigation، Progress، Quiz، Exercise، Search، Bookmark، Settings، Content Engine و قرارداد Course Package در Repository مرکزی `as-academy-core` نگهداری می شوند و این دوره باید از آن Core استفاده کند.
+این Repository فقط **Course/Content/Capability اختصاصی C** را نگهداری می کند. Navigation، Design System، Database، Progress، Quiz Engine، Exercise Engine، Search، Bookmark، Settings، Drawer/Profile، Content Engine/Updater و قرارداد Course Package متعلق به `AS-Academy-Core` هستند.
 
-## AS Academy
+بنابراین هر قابلیت عمومی جدید ابتدا در Core پیاده سازی می شود و دوره C فقط داده و تنظیمات لازم برای استفاده از آن را ارائه می کند.
 
-این Repository بخشی از مجموعه آموزشی AS Academy است و به مرور با درس ها، مثال های کدنویسی، تمرین ها، پروژه های عملی و مستندات تکمیلی توسعه داده می شود.
+## قرارداد Course Package
+
+`manifest.json` مطابق template فعلی `AS-Academy-Core/course/template/manifest.json` است و قابلیت های code runner، terminal examples، diagrams، quizzes، exercises، projects و glossary را اعلام می کند.
+
+## کیفیت سورس آموزشی
+
+مثال های دوره باید توضیحات کامنتی کافی، error handling متناسب با سطح درس و warningهای کامپایلر را رعایت کنند. CI مثال های اصلی را با GCC و Clang می سازد.
+
+## License / Content
+
+تا زمان تعیین License نهایی توسط مالک پروژه، هیچ License عمومی به Repository اضافه نشده است.
