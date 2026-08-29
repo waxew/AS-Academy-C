@@ -1,0 +1,7 @@
+[
+{"id":"ex-hello","lessonId":"c-001","title":"اولین خروجی","difficulty":"easy","prompt":"برنامه ای بنویسید که Hello C را چاپ کند.","acceptance":["از stdio.h استفاده شود","main مقدار 0 برگرداند","خروجی دقیقاً Hello C باشد"]},
+{"id":"ex-calculator","lessonId":"c-005","title":"ماشین حساب امن","difficulty":"medium","prompt":"دو عدد و یک عملگر دریافت کنید و چهار عمل اصلی را با مدیریت ورودی نامعتبر و تقسیم بر صفر انجام دهید.","acceptance":["نتیجه scanf بررسی شود","تقسیم بر صفر مدیریت شود","منطق عملیات در تابع جدا باشد"]},
+{"id":"ex-swap","lessonId":"c-009","title":"Swap با Pointer","difficulty":"medium","prompt":"تابع swap_int(int *a, int *b) را برای جابه جایی دو مقدار پیاده سازی کنید.","acceptance":["از pointer استفاده شود","مقادیر واقعاً در caller تغییر کنند","pointerهای نامعتبر بدون dereference رها شوند"]},
+{"id":"ex-vector","lessonId":"c-013","title":"Dynamic Vector","difficulty":"hard","prompt":"یک vector پویا برای int با size و capacity، عملیات push و resize امن بسازید.","acceptance":["مالکیت حافظه مشخص باشد","realloc با pointer موقت بررسی شود","همه allocationها آزاد شوند","خطای allocation گزارش شود"]},
+{"id":"ex-parser","lessonId":"c-027","title":"Safe Parser","difficulty":"expert","prompt":"Parser مقاوم در برابر ورودی empty، malformed و oversized طراحی کنید.","acceptance":["همه boundsها پیش از write بررسی شوند","ورودی نامعتبر status خطا برگرداند","هیچ unchecked copy وجود نداشته باشد","با sanitizer تست شود"]}
+]
