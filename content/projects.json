@@ -1,0 +1,16 @@
+{
+  "projects": [
+    {"id":"p01","level":"fundamentals","title":"ماشین حساب CLI","skills":["I/O","conditionals","functions"]},
+    {"id":"p02","level":"fundamentals","title":"Number Guessing Game","skills":["loops","random","validation"]},
+    {"id":"p03","level":"beginner","title":"مدیریت دانشجو","skills":["struct","arrays","files"]},
+    {"id":"p04","level":"beginner","title":"دفترچه تلفن","skills":["strings","search","persistence"]},
+    {"id":"p05","level":"beginner","title":"مدیریت کتابخانه","skills":["modules","files","records"]},
+    {"id":"p06","level":"advanced","title":"Dynamic Array Library","skills":["memory","API design","tests"]},
+    {"id":"p07","level":"advanced","title":"Data Structures Pack","skills":["list","stack","queue","hash"]},
+    {"id":"p08","level":"advanced","title":"Mini Database","skills":["binary files","indexing","serialization"]},
+    {"id":"p09","level":"professional","title":"Mini Shell","skills":["POSIX","process","pipes"]},
+    {"id":"p10","level":"professional","title":"TCP Client Server","skills":["socket","protocol","error handling"]},
+    {"id":"p11","level":"professional","title":"Embedded Device Simulator","skills":["bit masks","volatile concepts","state machine"]},
+    {"id":"p12","level":"professional","title":"AS C Capstone","skills":["architecture","memory safety","testing","CMake","documentation","release"]}
+  ]
+}
