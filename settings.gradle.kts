@@ -5,6 +5,13 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories { google(); mavenCentral() }
+
+    // ماژول های Core از aliasهای libs استفاده می کنند؛ Course App همان catalog مرکزی را import می کند.
+    versionCatalogs {
+        create("libs") {
+            from(files("../AS-Academy-Core/gradle/libs.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "AS-Academy-C"
