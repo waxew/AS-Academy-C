@@ -1,0 +1,14 @@
+{
+  "quizzes": [
+    {"id":"q01","lesson":"c-003","question":"کدام مرحله #include را پردازش می کند؟","choices":["Linker","Preprocessor","Assembler","Loader"],"answer":1,"explanation":"دستورهای پیش پردازنده قبل از کامپایل پردازش می شوند."},
+    {"id":"q02","lesson":"c-006","question":"کدام حلقه حداقل یک بار اجرا می شود؟","choices":["for","while","do while","هیچ کدام"],"answer":2,"explanation":"شرط do while پس از اجرای بدنه بررسی می شود."},
+    {"id":"q03","lesson":"c-009","question":"عملگر گرفتن آدرس یک متغیر چیست؟","choices":["*","&","->","%"],"answer":1,"explanation":"عملگر & آدرس شیء را برمی گرداند."},
+    {"id":"q04","lesson":"c-013","question":"حافظه malloc در پایان استفاده چگونه آزاد می شود؟","choices":["delete","remove","free","clear"],"answer":2,"explanation":"حافظه تخصیص یافته توسط خانواده malloc با free آزاد می شود."},
+    {"id":"q05","lesson":"c-015","question":"دسترسی خارج از محدوده آرایه در C چه وضعیتی دارد؟","choices":["همیشه صفر","Compile Error قطعی","Undefined Behavior","Exception"],"answer":2,"explanation":"C بررسی bounds خودکار ندارد و چنین دسترسی می تواند UB باشد."},
+    {"id":"q06","lesson":"c-016","question":"برای روشن کردن یک bit در mask معمولاً از چه عملی استفاده می شود؟","choices":["OR","division","modulo","logical NOT"],"answer":0,"explanation":"OR با mask مناسب bit هدف را set می کند."},
+    {"id":"q07","lesson":"c-017","question":"هدف اصلی Make/CMake چیست؟","choices":["ویرایش متن","مدیریت build","مدیریت دیتابیس","اجرای شبکه"],"answer":1,"explanation":"این ابزارها فرآیند build و dependencyها را مدیریت می کنند."},
+    {"id":"q08","lesson":"c-018","question":"AddressSanitizer عمدتاً برای چیست؟","choices":["فرمت کد","خطاهای حافظه","ترجمه","شبکه"],"answer":1,"explanation":"ASan بسیاری از خطاهای دسترسی حافظه را در زمان اجرا تشخیص می دهد."},
+    {"id":"q09","lesson":"c-023","question":"Race condition به چه چیزی مربوط است؟","choices":["دسترسی همزمان ناسازگار","خطای Syntax","Link Error","فشرده سازی"],"answer":0,"explanation":"Race زمانی رخ می دهد که نتیجه به ترتیب دسترسی های همزمان وابسته شود."},
+    {"id":"q10","lesson":"c-027","question":"برای داده ورودی نامطمئن بهترین رویکرد چیست؟","choices":["اعتماد کامل","اعتبارسنجی bounds و format","حذف error handling","استفاده از global"],"answer":1,"explanation":"ورودی باید پیش از استفاده اعتبارسنجی شود."}
+  ]
+}
