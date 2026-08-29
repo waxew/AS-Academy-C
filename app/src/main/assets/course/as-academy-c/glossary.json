@@ -1,0 +1,12 @@
+[
+  {"term":"Compiler","fa":"کامپایلر","definition":"ابزاری که کد C را تحلیل و برای مراحل ساخت برنامه ترجمه می کند."},
+  {"term":"Pointer","fa":"اشاره گر","definition":"مقداری که آدرس object یا function را نگه می دارد."},
+  {"term":"Dereference","fa":"دسترسی از طریق اشاره گر","definition":"دسترسی به object اشاره شده توسط pointer با رعایت اعتبار pointer."},
+  {"term":"Stack","fa":"پشته","definition":"ناحیه متداول برای frameهای فراخوانی و objectهای automatic."},
+  {"term":"Heap","fa":"حافظه پویا","definition":"storage مدیریت شده از طریق allocatorهایی مانند malloc/free."},
+  {"term":"Undefined Behavior","fa":"رفتار تعریف نشده","definition":"وضعیتی که استاندارد C نتیجه مشخصی برای اجرای برنامه الزام نمی کند."},
+  {"term":"Translation Unit","fa":"واحد ترجمه","definition":"کد حاصل پس از preprocessing که مستقل کامپایل می شود."},
+  {"term":"Linker","fa":"لینکر","definition":"Object fileها و libraryها را برای ساخت خروجی نهایی به هم متصل می کند."},
+  {"term":"ABI","fa":"رابط دودویی برنامه","definition":"قرارداد binary شامل calling convention، layout و linkage."},
+  {"term":"Sanitizer","fa":"ابزار تشخیص خطای runtime","definition":"Instrumentation برای یافتن دسته هایی از خطاهای حافظه و Undefined Behavior."}
+]
