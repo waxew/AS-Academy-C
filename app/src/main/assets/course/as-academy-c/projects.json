@@ -1,8 +1,0 @@
-[
-  {"id":"project-calculator","title":"ماشین حساب CLI","summary":"اولین پروژه برای ترکیب I/O، شرط و Function.","difficulty":"مبانی","steps":["طراحی منوی عملیات","دریافت ورودی معتبر","پیاده سازی Functionها","مدیریت تقسیم بر صفر","تست ورودی ها"]},
-  {"id":"project-students","title":"مدیریت دانشجو","summary":"ثبت، جستجو و ذخیره رکوردهای دانشجو.","difficulty":"مقدماتی","steps":["تعریف Student","افزودن و ویرایش","جستجو","مرتب سازی","ذخیره در فایل","بارگذاری مجدد"]},
-  {"id":"project-vector","title":"Dynamic Array Library","summary":"ساخت کتابخانه آرایه پویا با API تمیز.","difficulty":"پیشرفته","steps":["طراحی Header","create/destroy","push/pop","resize","error handling","unit tests","CMake library"]},
-  {"id":"project-shell","title":"Mini Shell","summary":"پروژه System Programming برای اجرای command و مدیریت process.","difficulty":"تخصصی","steps":["خواندن command","tokenize","ایجاد process","اجرای command","مدیریت exit status","pipe ساده","مدیریت خطا"]},
-  {"id":"project-network","title":"TCP Client/Server","summary":"ساخت protocol ساده روی TCP.","difficulty":"تخصصی","steps":["تعریف protocol","server socket","accept loop","client","partial I/O","disconnect handling","تست چند پیام"]},
-  {"id":"project-capstone","title":"File-backed Key-Value Store","summary":"پروژه نهایی چندماژوله دوره C.","difficulty":"Capstone","steps":["In-memory store","Persistence","Reload","Delete/Tombstone","Compaction","Tests","Sanitizers","Documentation","Release"]}
-]
