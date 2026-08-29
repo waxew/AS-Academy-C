@@ -1,0 +1,12 @@
+[
+{"id":"q-001","lessonId":"c-001","question":"نقطه شروع معمول برنامه hosted C چیست؟","options":["main","start","run","init"],"correctIndex":0,"explanation":"اجرای برنامه hosted C از main آغاز می شود."},
+{"id":"q-002","lessonId":"c-002","question":"برای build کد C چه چیزی لازم است؟","options":["فقط editor","toolchain شامل compiler/linker","فقط debugger","فقط Git"],"correctIndex":1,"explanation":"Editor به تنهایی compiler نیست."},
+{"id":"q-003","lessonId":"c-003","question":"#include در چه مرحله ای پردازش می شود؟","options":["Preprocessing","Linking","Execution","Loading"],"correctIndex":0,"explanation":"Directiveهای preprocessor قبل از compilation پردازش می شوند."},
+{"id":"q-004","lessonId":"c-005","question":"با return value تابع scanf چه کنیم؟","options":["بررسی کنیم","نادیده بگیریم","همیشه free کنیم","به صفر تنظیم کنیم"],"correctIndex":0,"explanation":"Return value تعداد conversionهای موفق را مشخص می کند."},
+{"id":"q-005","lessonId":"c-009","question":"Dereference pointer نامعتبر می تواند چه نتیجه ای داشته باشد؟","options":["Undefined Behavior","همیشه صفر","Exception تضمینی","Compile Error تضمینی"],"correctIndex":0,"explanation":"Pointer باید به object معتبر و زنده اشاره کند."},
+{"id":"q-006","lessonId":"c-013","question":"Storage گرفته شده با malloc با چه تابعی آزاد می شود؟","options":["delete","free","clear","drop"],"correctIndex":1,"explanation":"از free استفاده می شود."},
+{"id":"q-007","lessonId":"c-015","question":"دسترسی خارج از bounds آرایه چیست؟","options":["Undefined Behavior","رفتار portable","همیشه صفر","همیشه exception"],"correctIndex":0,"explanation":"C bounds checking خودکار ندارد."},
+{"id":"q-008","lessonId":"c-018","question":"AddressSanitizer برای چه چیزی مفید است؟","options":["کشف خطاهای حافظه runtime","ساخت UI","شبکه","فرمت کد"],"correctIndex":0,"explanation":"ASan دسته هایی از memory error را آشکار می کند."},
+{"id":"q-009","lessonId":"c-023","question":"آیا volatile جایگزین synchronization thread است؟","options":["بله","خیر"],"correctIndex":1,"explanation":"Synchronization به primitive مناسب نیاز دارد."},
+{"id":"q-010","lessonId":"c-024","question":"Socket API معمولاً متعلق به چیست؟","options":["ISO C خالص","API سیستم عامل مثل POSIX/Winsock","stdio","preprocessor"],"correctIndex":1,"explanation":"Socket API بخشی از ISO C استاندارد نیست."}
+]
