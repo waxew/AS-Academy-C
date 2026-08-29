@@ -1,0 +1,1 @@
+{"id":"c-017","chapterId":"c-memory-tools","title":"Make و CMake","summary":"مدیریت Build پروژه واقعی","order":5,"estimatedMinutes":28,"blocks":[{"id":"b1","type":"CODE","content":"cmake -S . -B build\ncmake --build build","metadata":{"language":"terminal"}},{"id":"b2","type":"EXERCISE","content":"یک static library و executable جدا بسازید و آن ها را link کنید."}]}
