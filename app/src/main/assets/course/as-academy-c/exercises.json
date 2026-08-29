@@ -1,7 +1,0 @@
-[
-  {"id":"ex-hello","lessonId":"c-001","title":"اولین خروجی","description":"برنامه ای بنویسید که Hello C را چاپ کند.","type":"WRITE_CODE","difficulty":"EASY","starterCode":"#include <stdio.h>\n\nint main(void) {\n    // کد شما\n    return 0;\n}","expectedOutput":"Hello C","hints":["از printf استفاده کنید."],"solution":"printf(\"Hello C\\n\");"},
-  {"id":"ex-calculator","lessonId":"c-005","title":"ماشین حساب امن","description":"دو عدد و عملگر بگیرید و تقسیم بر صفر را مدیریت کنید.","type":"BUILD_FEATURE","difficulty":"MEDIUM","hints":["نتیجه scanf را بررسی کنید.","قبل از division مخرج را بررسی کنید."]},
-  {"id":"ex-swap","lessonId":"c-009","title":"Swap با Pointer","description":"تابعی بنویسید که مقدار دو int را با pointer جابه جا کند.","type":"WRITE_CODE","difficulty":"MEDIUM","starterCode":"void swap_int(int *a, int *b) {\n    // TODO\n}","hints":["به یک temporary int نیاز دارید."]},
-  {"id":"ex-vector","lessonId":"c-013","title":"Dynamic Vector","description":"ساختار vector با size/capacity و resize امن پیاده سازی کنید.","type":"BUILD_FEATURE","difficulty":"HARD","hints":["نتیجه realloc را ابتدا در pointer موقت نگه دارید.","مالکیت حافظه را مشخص کنید."]},
-  {"id":"ex-parser","lessonId":"c-027","title":"Safe Parser","description":"Parser مقاوم در برابر ورودی empty، malformed و oversized بسازید.","type":"BUILD_FEATURE","difficulty":"EXPERT","hints":["همه boundsها را قبل از write بررسی کنید.","خطاها را با return status گزارش کنید."]}
-]
