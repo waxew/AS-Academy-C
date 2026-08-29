@@ -1,0 +1,16 @@
+{
+  "exercises": [
+    {"id":"e01","level":"fundamentals","title":"Hello AS Academy","task":"برنامه ای بنویسید که نام و نسخه دوره را چاپ کند.","concepts":["main","printf"]},
+    {"id":"e02","level":"fundamentals","title":"ماشین حساب","task":"دو عدد و یک عملگر دریافت و نتیجه را با مدیریت تقسیم بر صفر چاپ کنید.","concepts":["scanf","switch","validation"]},
+    {"id":"e03","level":"fundamentals","title":"تحلیل اعداد","task":"مجموع، میانگین، کمینه و بیشینه N عدد را محاسبه کنید.","concepts":["loops","arrays"]},
+    {"id":"e04","level":"beginner","title":"String Toolkit","task":"توابع طول، reverse و شمارش حروف را تمرین کنید.","concepts":["strings","functions"]},
+    {"id":"e05","level":"beginner","title":"Student Records","task":"اطلاعات دانشجوها را با struct ذخیره، مرتب و جستجو کنید.","concepts":["struct","arrays","sorting"]},
+    {"id":"e06","level":"beginner","title":"File Statistics","task":"یک فایل متنی را خوانده و تعداد خطوط، کلمات و نویسه ها را گزارش کنید.","concepts":["files"]},
+    {"id":"e07","level":"advanced","title":"Dynamic Vector","task":"یک آرایه پویا با resize پیاده سازی کنید.","concepts":["malloc","realloc","ownership"]},
+    {"id":"e08","level":"advanced","title":"Generic Sort","task":"مرتب سازی را با callback مقایسه کننده پیاده سازی کنید.","concepts":["function pointers","void pointers"]},
+    {"id":"e09","level":"advanced","title":"Bit Flags","task":"سیستم permission مبتنی بر bit mask طراحی کنید.","concepts":["bitwise"]},
+    {"id":"e10","level":"professional","title":"Linked List Library","task":"کتابخانه linked list با API و تست بسازید.","concepts":["data structures","modules","tests"]},
+    {"id":"e11","level":"professional","title":"TCP Echo","task":"Client و Server ساده TCP ایجاد کنید.","concepts":["sockets","networking"]},
+    {"id":"e12","level":"professional","title":"Safe Parser","task":"Parser مقاوم در برابر ورودی خراب با error handling کامل بسازید.","concepts":["secure C","validation","testing"]}
+  ]
+}
