@@ -1,0 +1,25 @@
+# خروجی های C و CMake نباید وارد Repository شوند.
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Makefile.local
+
+# Object/library/binary artifacts.
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# Editor/OS files.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
