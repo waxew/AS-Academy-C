@@ -1,8 +1,0 @@
-[
-{"id":"project-calculator","levelId":"fundamentals","title":"ماشین حساب CLI","deliverables":["منوی چهار عمل اصلی","اعتبارسنجی ورودی","مدیریت تقسیم بر صفر","تست سناریوهای خطا"],"skills":["I/O","operators","condition","functions"]},
-{"id":"project-students","levelId":"beginner","title":"مدیریت دانشجو","deliverables":["ثبت و ویرایش Student","جستجو و مرتب سازی","ذخیره و بازیابی فایل","گزارش خطا"],"skills":["struct","array","string","file I/O"]},
-{"id":"project-vector","levelId":"advanced","title":"Dynamic Array Library","deliverables":["Header عمومی","create/destroy","push/pop","resize امن","unit tests","CMake target"],"skills":["dynamic memory","API design","testing","CMake"]},
-{"id":"project-shell","levelId":"specialist","title":"Mini Shell","deliverables":["command parser","process execution","exit status","pipe ساده","error handling"],"skills":["POSIX","process","parser","system programming"]},
-{"id":"project-network","levelId":"specialist","title":"TCP Client/Server","deliverables":["protocol مشخص","TCP server","client","partial I/O handling","disconnect handling"],"skills":["socket","TCP","protocol design","robust I/O"]},
-{"id":"project-capstone","levelId":"specialist","title":"File-backed Key-Value Store","deliverables":["in-memory store","persistence","reload","delete/tombstone","compaction","tests","sanitizer clean build","documentation"],"skills":["data structures","files","memory ownership","modular design","testing","secure C"]}
-]

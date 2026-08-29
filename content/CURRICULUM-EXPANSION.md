@@ -1,18 +1,42 @@
 # توسعه محتوای آموزشی C
 
-هدف: تبدیل سرفصل‌ها به آموزش عملی داخل برنامه.
+هدف این بخش تبدیل ۲۸ درس اصلی به یک مسیر یادگیری عمیق و قابل تمرین است.
 
 ## مبانی
-C و کاربردها؛ نصب GCC/Clang؛ فرایند Build؛ Syntax؛ Type/Variable/Constant؛ I/O امن؛ Operator؛ Control Flow.
+1. C چیست، کاربردها و استانداردها
+2. نصب GCC و Clang و محیط توسعه
+3. Source → Preprocessor → Compiler → Assembler → Linker
+4. Syntax، Identifier، Comment و ساختار برنامه
+5. Typeها، Variableها، Constantها و Conversion
+6. printf، scanf و ورودی امن
+7. Operatorها، precedence و evaluation
+8. if، switch، for، while و do-while
 
 ## مقدماتی
-Function و Scope؛ Array؛ String؛ Pointer؛ Lifetime/Storage Duration؛ struct/union/enum/typedef؛ File I/O؛ Preprocessor/Header/Modules.
+9. Function، Prototype، Scope و Recursion
+10. Array یک‌بعدی و چندبعدی
+11. String، char array و string.h
+12. Pointer، address، dereference و pointer arithmetic
+13. Lifetime و Storage Duration
+14. struct، union، enum و typedef
+15. File I/O متنی و Binary
+16. Preprocessor، Header و پروژه چندفایلی
 
 ## پیشرفته
-Dynamic Memory و Ownership؛ Function Pointer/Callback؛ Memory Model/Alignment/UB؛ Bitwise؛ Make/CMake/Library؛ Debug/Sanitizer/Test/Profiling.
+17. Dynamic Memory و Ownership
+18. Function Pointer، Callback و API عمومی
+19. Memory Model، Alignment و Undefined Behavior
+20. Bitwise، Mask و Flag
+21. Make، CMake، Static/Shared Library
+22. GDB/LLDB، Sanitizer، Test و Profiling
 
 ## تخصصی
-C23؛ Data Structure/Algorithm؛ POSIX/System Programming؛ Concurrency/Atomic؛ TCP/UDP/Protocol؛ Embedded C؛ ABI/FFI؛ Secure C؛ Capstone.
+23. C23 و Modern C
+24. Data Structure و Algorithm
+25. POSIX و System Programming
+26. Concurrency، Thread، Mutex و Atomic
+27. Network Programming، TCP/UDP و Protocol
+28. Embedded C، ABI/FFI، Secure C و Capstone
 
-## استاندارد اجباری هر درس
-هر درس نهایی باید شامل هدف، پیش‌نیاز، توضیح مفهومی، Syntax، چند مثال، خطاهای رایج، نکات امنیتی و حافظه‌ای، تمرین هدایت‌شده، تمرین مستقل، Quiz و Mini Project باشد.
+## استاندارد هر درس
+هر درس نهایی باید شامل هدف، پیش‌نیاز، توضیح مفهومی، Syntax، چند مثال، خطاهای رایج، نکات امنیتی/حافظه‌ای، تمرین هدایت‌شده، تمرین مستقل، Quiz و Mini Project باشد.
