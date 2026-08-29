@@ -1,0 +1,31 @@
+# CI دوره C: مثال های سورس در هر Push و Pull Request کامپایل می شوند.
+name: C Course CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.compiler }}
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Run examples
+        run: |
+          ./build/c_hello
+          ./build/c_student_records
+          ./build/c_dynamic_array
+          ./build/c_bit_flags
