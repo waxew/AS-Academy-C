@@ -1,0 +1,11 @@
+{
+  "courseId": "as-academy-c",
+  "version": "1.0.0",
+  "levels": [
+    {"id":"fundamentals","title":"مبانی","modules":["intro","setup","build-pipeline","syntax-types","io-operators","control-flow"]},
+    {"id":"beginner","title":"مقدماتی","modules":["functions","arrays-strings","pointers","struct-union-enum","files","preprocessor-modules"]},
+    {"id":"advanced","title":"پیشرفته","modules":["dynamic-memory","advanced-pointers","memory-model","bitwise","build-systems","debug-sanitize-test-profile"]},
+    {"id":"professional","title":"تخصصی","modules":["c23","data-structures","algorithms","posix","concurrency","networking","embedded","abi-ffi","secure-c","capstone"]}
+  ],
+  "stats": {"levels":4,"modules":28,"projects":12,"standard":"C23"}
+}
