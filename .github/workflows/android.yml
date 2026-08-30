@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-debug-apk:
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout C course
@@ -34,12 +34,25 @@ jobs:
         working-directory: AS-Academy-C
         run: python3 scripts/validate_course_assets.py
 
-      - name: Build debug APK
+      - name: Build debug and release candidate APKs
         working-directory: AS-Academy-C
-        run: gradle :app:assembleDebug
+        run: gradle :app:assembleDebug :app:assembleRelease
 
-      - name: Upload APK
+      - name: Verify APK outputs
+        working-directory: AS-Academy-C
+        run: |
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          test -s app/build/outputs/apk/release/app-release-unsigned.apk
+          sha256sum app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/release/app-release-unsigned.apk
+
+      - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: as-academy-c-debug
-          path: AS-Academy-C/app/build/outputs/apk/debug/*.apk
+          path: AS-Academy-C/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload unsigned release candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: as-academy-c-release-unsigned
+          path: AS-Academy-C/app/build/outputs/apk/release/app-release-unsigned.apk
