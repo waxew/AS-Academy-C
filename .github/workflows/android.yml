@@ -2,7 +2,7 @@ name: Android App CI
 
 on:
   push:
-    paths: ["app/**", "*.gradle.kts", "gradle.properties", ".github/workflows/android.yml"]
+    paths: ["app/**", "scripts/**", "*.gradle.kts", "gradle.properties", ".github/workflows/android.yml"]
   pull_request:
   workflow_dispatch:
 
@@ -29,6 +29,10 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      - name: Validate course package
+        working-directory: AS-Academy-C
+        run: python3 scripts/validate_course_assets.py
 
       - name: Build debug APK
         working-directory: AS-Academy-C
