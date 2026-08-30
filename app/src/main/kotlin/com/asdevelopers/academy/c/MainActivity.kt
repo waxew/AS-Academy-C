@@ -2,35 +2,57 @@ package com.asdevelopers.academy.c
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.asdevelopers.academy.core.content.LearningExtras
+import com.asdevelopers.academy.core.content.LearningExtrasLoader
+import com.asdevelopers.academy.core.database.AcademyDatabase
+import com.asdevelopers.academy.core.database.ExerciseDraftEntity
+import com.asdevelopers.academy.core.database.LearningCompletionEntity
+import com.asdevelopers.academy.core.database.LessonProgressEntity
+import com.asdevelopers.academy.core.database.ProjectProgressEntity
+import com.asdevelopers.academy.core.database.QuizResultEntity
+import com.asdevelopers.academy.core.project.ProjectProgress
 import com.asdevelopers.academy.core.ui.content.LessonRenderer
+import com.asdevelopers.academy.core.ui.screens.AcademyExerciseScreen
+import com.asdevelopers.academy.core.ui.screens.AcademyProjectScreen
+import com.asdevelopers.academy.core.ui.screens.AcademyQuizScreen
 import com.asdevelopers.academy.course.model.Lesson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-/**
- * نقطه ورود اپ آموزش C.
- * مدل Lesson و Renderer از Core/Course مشترک می‌آیند و این Host فقط Asset اختصاصی C را انتخاب می‌کند.
- */
+private const val COURSE_ID = "as-academy-c"
+
+/** نقطه ورود اپ C؛ UI/Engine/Database عمومی از AS-Academy-Core مصرف می‌شوند. */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +64,38 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/** Host سبک دوره تا زمان اتصال کامل CourseBundle، بدون کپی کردن Lesson renderer. */
+/** مقصدهای محلی فقط انتخاب محتوای C را نگه می‌دارند؛ منطق Screenها در Core است. */
+private sealed interface CourseScreen {
+    data object Home : CourseScreen
+    data class LessonDetail(val id: String) : CourseScreen
+    data class ExerciseDetail(val id: String) : CourseScreen
+    data class QuizDetail(val id: String) : CourseScreen
+    data class ProjectDetail(val id: String) : CourseScreen
+}
+
+/**
+ * Host دوره C محتوا را از Asset اختصاصی می‌خواند و Progress/Draft/Result را در دیتابیس Core ذخیره می‌کند.
+ */
 @Composable
 private fun CCourseHost() {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val database = remember { AcademyDatabase.create(context, "as_academy_c.db") }
     var lessons by remember { mutableStateOf<List<Lesson>>(emptyList()) }
-    var selectedLesson by remember { mutableStateOf<Lesson?>(null) }
+    var extras by remember { mutableStateOf(LearningExtras()) }
+    var screen by remember { mutableStateOf<CourseScreen>(CourseScreen.Home) }
     var error by remember { mutableStateOf<String?>(null) }
+
+    DisposableEffect(database) {
+        onDispose { database.close() }
+    }
 
     LaunchedEffect(Unit) {
         runCatching {
             withContext(Dispatchers.IO) {
                 val json = Json { ignoreUnknownKeys = true }
-                val base = "course/as-academy-c/lessons"
-                context.assets.list(base).orEmpty()
+                val base = "course/$COURSE_ID/lessons"
+                val loadedLessons = context.assets.list(base).orEmpty()
                     .filter { it.endsWith(".json") }
                     .sorted()
                     .map { fileName ->
@@ -64,26 +104,232 @@ private fun CCourseHost() {
                             .use { it.readText() }
                         json.decodeFromString<Lesson>(raw)
                     }
-                    .sortedBy { it.order }
+                    .sortedBy { it.id }
+                loadedLessons to LearningExtrasLoader(context.assets).load(COURSE_ID)
             }
-        }.onSuccess { lessons = it }
-            .onFailure { error = it.message ?: it.toString() }
+        }.onSuccess { (loadedLessons, loadedExtras) ->
+            lessons = loadedLessons
+            extras = loadedExtras
+        }.onFailure {
+            error = it.message ?: it.toString()
+        }
+    }
+
+    BackHandler(enabled = screen !is CourseScreen.Home) {
+        screen = CourseScreen.Home
     }
 
     when {
         error != null -> CourseMessage("خطا در بارگذاری دوره C", error.orEmpty())
-        selectedLesson != null -> LessonRenderer(
-            lesson = requireNotNull(selectedLesson),
-            modifier = Modifier.fillMaxSize().padding(16.dp)
-        )
         lessons.isEmpty() -> CourseMessage("در حال بارگذاری دوره C", "محتوای آموزشی آماده‌سازی می‌شود…")
-        else -> CCourseHome(lessons = lessons, onLessonClick = { selectedLesson = it })
+        else -> when (val destination = screen) {
+            CourseScreen.Home -> CCourseHome(
+                lessons = lessons,
+                extras = extras,
+                database = database,
+                onLessonClick = { screen = CourseScreen.LessonDetail(it) },
+                onExerciseClick = { screen = CourseScreen.ExerciseDetail(it) },
+                onQuizClick = { screen = CourseScreen.QuizDetail(it) },
+                onProjectClick = { screen = CourseScreen.ProjectDetail(it) }
+            )
+
+            is CourseScreen.LessonDetail -> {
+                val lesson = lessons.firstOrNull { it.id == destination.id }
+                if (lesson == null) {
+                    CourseMessage("درس پیدا نشد", destination.id)
+                } else {
+                    Column(Modifier.fillMaxSize()) {
+                        TopBackBar("درس", onBack = { screen = CourseScreen.Home })
+                        LessonRenderer(
+                            lesson = lesson,
+                            modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+                            onExerciseClick = { screen = CourseScreen.ExerciseDetail(it) },
+                            onQuizClick = { screen = CourseScreen.QuizDetail(it) },
+                            onProjectClick = { screen = CourseScreen.ProjectDetail(it) }
+                        )
+                        Button(
+                            onClick = {
+                                val now = System.currentTimeMillis()
+                                scope.launch {
+                                    database.progressDao().upsert(
+                                        LessonProgressEntity(
+                                            courseId = COURSE_ID,
+                                            lessonId = lesson.id,
+                                            status = "COMPLETED",
+                                            progressPercent = 100,
+                                            lastBlockIndex = lesson.blocks.lastIndex.coerceAtLeast(0),
+                                            studySeconds = 0,
+                                            lastOpenedAt = now,
+                                            completedAt = now
+                                        )
+                                    )
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        ) {
+                            Text("ثبت درس به‌عنوان تکمیل‌شده")
+                        }
+                    }
+                }
+            }
+
+            is CourseScreen.ExerciseDetail -> {
+                val exercise = extras.exercises.firstOrNull { it.id == destination.id }
+                if (exercise == null) {
+                    CourseMessage("تمرین پیدا نشد", destination.id)
+                } else {
+                    val draft by database.exerciseDraftDao()
+                        .observe(COURSE_ID, exercise.id)
+                        .collectAsState(initial = null)
+                    Column(Modifier.fillMaxSize()) {
+                        TopBackBar("تمرین", onBack = { screen = CourseScreen.Home })
+                        AcademyExerciseScreen(
+                            exercise = exercise,
+                            modifier = Modifier.weight(1f),
+                            initialAnswer = draft?.answer.orEmpty(),
+                            onDraftChanged = { answer ->
+                                scope.launch {
+                                    database.exerciseDraftDao().upsert(
+                                        ExerciseDraftEntity(COURSE_ID, exercise.id, answer, System.currentTimeMillis())
+                                    )
+                                }
+                            },
+                            onCompleted = { answer ->
+                                val now = System.currentTimeMillis()
+                                scope.launch {
+                                    database.exerciseDraftDao().upsert(
+                                        ExerciseDraftEntity(COURSE_ID, exercise.id, answer, now)
+                                    )
+                                    database.learningCompletionDao().upsert(
+                                        LearningCompletionEntity(
+                                            key = "$COURSE_ID:EXERCISE:${exercise.id}",
+                                            courseId = COURSE_ID,
+                                            targetType = "EXERCISE",
+                                            targetId = exercise.id,
+                                            completed = true,
+                                            completedAt = now
+                                        )
+                                    )
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+
+            is CourseScreen.QuizDetail -> {
+                val quiz = extras.quizzes.firstOrNull { it.id == destination.id }
+                if (quiz == null) {
+                    CourseMessage("آزمون پیدا نشد", destination.id)
+                } else {
+                    Column(Modifier.fillMaxSize()) {
+                        TopBackBar("آزمون", onBack = { screen = CourseScreen.Home })
+                        AcademyQuizScreen(
+                            quiz = quiz,
+                            modifier = Modifier.weight(1f),
+                            onCompleted = { score ->
+                                val now = System.currentTimeMillis()
+                                scope.launch {
+                                    database.quizResultDao().insert(
+                                        QuizResultEntity(
+                                            attemptId = "$COURSE_ID:${quiz.id}:$now",
+                                            courseId = COURSE_ID,
+                                            quizId = quiz.id,
+                                            scorePercent = score.scorePercent,
+                                            correctCount = score.correctQuestionIds.size,
+                                            wrongCount = quiz.questions.size - score.correctQuestionIds.size,
+                                            weakTags = score.weakTags.sorted().joinToString(","),
+                                            completedAt = now
+                                        )
+                                    )
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+
+            is CourseScreen.ProjectDetail -> {
+                val project = extras.projects.firstOrNull { it.id == destination.id }
+                if (project == null) {
+                    CourseMessage("پروژه پیدا نشد", destination.id)
+                } else {
+                    val stored by database.projectProgressDao()
+                        .observe(COURSE_ID, project.id)
+                        .collectAsState(initial = null)
+                    val progress = stored?.let { entity ->
+                        ProjectProgress(
+                            courseId = entity.courseId,
+                            projectId = entity.projectId,
+                            completedMilestoneIds = entity.completedMilestoneIds
+                                .split('|')
+                                .filter(String::isNotBlank)
+                                .toSet(),
+                            draft = entity.draft,
+                            updatedAtEpochMillis = entity.updatedAt,
+                            completedAtEpochMillis = entity.completedAt
+                        )
+                    }
+                    Column(Modifier.fillMaxSize()) {
+                        TopBackBar("پروژه", onBack = { screen = CourseScreen.Home })
+                        AcademyProjectScreen(
+                            project = project,
+                            progress = progress,
+                            modifier = Modifier.weight(1f),
+                            onProgressChanged = { next ->
+                                scope.launch {
+                                    database.projectProgressDao().upsert(
+                                        ProjectProgressEntity(
+                                            courseId = COURSE_ID,
+                                            projectId = project.id,
+                                            completedMilestoneIds = next.completedMilestoneIds.sorted().joinToString("|"),
+                                            draft = next.draft,
+                                            updatedAt = next.updatedAtEpochMillis,
+                                            completedAt = next.completedAtEpochMillis
+                                        )
+                                    )
+                                    if (next.completedAtEpochMillis != null) {
+                                        database.learningCompletionDao().upsert(
+                                            LearningCompletionEntity(
+                                                key = "$COURSE_ID:PROJECT:${project.id}",
+                                                courseId = COURSE_ID,
+                                                targetType = "PROJECT",
+                                                targetId = project.id,
+                                                completed = true,
+                                                completedAt = next.completedAtEpochMillis
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
-/** صفحه فهرست واقعی ۲۸ درس C؛ جزئیات هر درس توسط Renderer مشترک Core نمایش داده می‌شود. */
+/** صفحه خانه همراه با Dashboard واقعی Progress و دسترسی به تمام فعالیت‌های یادگیری. */
 @Composable
-private fun CCourseHome(lessons: List<Lesson>, onLessonClick: (Lesson) -> Unit) {
+private fun CCourseHome(
+    lessons: List<Lesson>,
+    extras: LearningExtras,
+    database: AcademyDatabase,
+    onLessonClick: (String) -> Unit,
+    onExerciseClick: (String) -> Unit,
+    onQuizClick: (String) -> Unit,
+    onProjectClick: (String) -> Unit
+) {
+    val lessonProgress by database.progressDao().observeCourseWithLegacy(COURSE_ID).collectAsState(initial = emptyList())
+    val completions by database.learningCompletionDao().observeCourse(COURSE_ID).collectAsState(initial = emptyList())
+    val quizResults by database.quizResultDao().observeAll().collectAsState(initial = emptyList())
+    val completedLessons = lessons.count { lesson -> lessonProgress.any { it.lessonId == lesson.id && it.status == "COMPLETED" } }
+    val completedExercises = extras.exercises.count { exercise -> completions.any { it.targetType == "EXERCISE" && it.targetId == exercise.id && it.completed } }
+    val completedProjects = extras.projects.count { project -> completions.any { it.targetType == "PROJECT" && it.targetId == project.id && it.completed } }
+    val passedQuizzes = extras.quizzes.count { quiz -> quizResults.any { it.courseId == COURSE_ID && it.quizId == quiz.id && it.scorePercent >= quiz.passingScorePercent } }
+    val lessonPercent = if (lessons.isEmpty()) 0 else completedLessons * 100 / lessons.size
+
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -92,25 +338,60 @@ private fun CCourseHome(lessons: List<Lesson>, onLessonClick: (Lesson) -> Unit) 
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text("آموزش جامع زبان C", style = MaterialTheme.typography.headlineMedium)
                 Text("از مبانی زبان C تا حافظه، POSIX، شبکه، امنیت و Capstone")
-                Text("${lessons.size} درس آموزشی")
+                Text("پیشرفت درس‌ها: $completedLessons از ${lessons.size} — $lessonPercent٪")
+                LinearProgressIndicator(progress = { lessonPercent / 100f }, modifier = Modifier.fillMaxWidth())
+                Text("تمرین: $completedExercises/${extras.exercises.size} • آزمون قبول‌شده: $passedQuizzes/${extras.quizzes.size} • پروژه: $completedProjects/${extras.projects.size}")
             }
         }
+
+        item { SectionTitle("درس‌ها") }
         items(lessons, key = Lesson::id) { lesson ->
-            Card(onClick = { onLessonClick(lesson) }) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text(lesson.title, style = MaterialTheme.typography.titleMedium)
-                    Text(lesson.summary, style = MaterialTheme.typography.bodyMedium)
-                    Text("${lesson.estimatedMinutes} دقیقه", style = MaterialTheme.typography.labelMedium)
-                }
-            }
+            LearningCard(lesson.title, lesson.summary) { onLessonClick(lesson.id) }
+        }
+
+        item { SectionTitle("تمرین‌ها") }
+        items(extras.exercises, key = { it.id }) { exercise ->
+            LearningCard(exercise.title, "${exercise.difficulty.name} • مرتبط با ${exercise.lessonId}") { onExerciseClick(exercise.id) }
+        }
+
+        item { SectionTitle("آزمون‌ها") }
+        items(extras.quizzes, key = { it.id }) { quiz ->
+            LearningCard(quiz.title, "${quiz.questions.size} سؤال • حدنصاب ${quiz.passingScorePercent}٪") { onQuizClick(quiz.id) }
+        }
+
+        item { SectionTitle("پروژه‌ها") }
+        items(extras.projects, key = { it.id }) { project ->
+            LearningCard(project.title, "${project.milestones.size} مرحله • ${project.difficulty}") { onProjectClick(project.id) }
         }
     }
 }
 
-/** پیام Loading/Error یکپارچه و قابل خواندن برای Host دوره. */
+@Composable
+private fun TopBackBar(title: String, onBack: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        OutlinedButton(onClick = onBack) { Text("بازگشت") }
+        Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(top = 8.dp))
+    }
+}
+
+@Composable
+private fun SectionTitle(title: String) {
+    Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(top = 8.dp))
+}
+
+@Composable
+private fun LearningCard(title: String, subtitle: String, onClick: () -> Unit) {
+    Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            Text(subtitle, style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
 @Composable
 private fun CourseMessage(title: String, message: String) {
     Column(
