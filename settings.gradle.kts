@@ -6,7 +6,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories { google(); mavenCentral() }
 
-    // ماژول های Core از aliasهای libs استفاده می کنند؛ Course App همان catalog مرکزی را import می کند.
+    // Core remains the central version catalog for every thin Course App.
     versionCatalogs {
         create("libs") {
             from(files("../AS-Academy-Core/gradle/libs.versions.toml"))
@@ -15,9 +15,12 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "AS-Academy-C"
-include(":app", ":core", ":course", ":engine")
+include(":app", ":core", ":course", ":engine", ":main-ui")
 
-// Core به صورت Repository مرکزی و مجزا نگهداری می شود؛ برای توسعه محلی دو repo را کنار هم clone کنید.
+// Shared runtime/engine.
 project(":core").projectDir = file("../AS-Academy-Core/core")
 project(":course").projectDir = file("../AS-Academy-Core/course")
 project(":engine").projectDir = file("../AS-Academy-Core/engine")
+
+// Shared presentation layer. Clone AS-Academy-MainUi beside this repository for local builds.
+project(":main-ui").projectDir = file("../AS-Academy-MainUi/main-ui")
