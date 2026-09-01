@@ -10,7 +10,7 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout C course
+      - name: Checkout C app
         uses: actions/checkout@v4
         with:
           path: AS-Academy-C
@@ -21,6 +21,31 @@ jobs:
           repository: waxew/AS-Academy-Core
           path: AS-Academy-Core
 
+      - name: Checkout shared MainUi
+        uses: actions/checkout@v4
+        with:
+          repository: waxew/AS-Academy-MainUi
+          path: AS-Academy-MainUi
+
+      - name: Checkout canonical MainCourse
+        uses: actions/checkout@v4
+        with:
+          repository: waxew/AS-Academy-MainCourse
+          path: AS-Academy-MainCourse
+
+      - name: Sync canonical C content into APK assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE='AS-Academy-MainCourse/courses/c/course'
+          TARGET='AS-Academy-C/app/src/main/assets/course/as-academy-c'
+          test -f "$SOURCE/manifest.json"
+          test -d "$SOURCE/lessons"
+          rm -rf "$TARGET"
+          mkdir -p "$TARGET"
+          cp -a "$SOURCE"/. "$TARGET"/
+          echo "C APK content source: AS-Academy-MainCourse/courses/c/course"
+
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
@@ -30,7 +55,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Validate course package
+      - name: Validate synced MainCourse package
         working-directory: AS-Academy-C
         run: python3 scripts/validate_course_assets.py
 
@@ -48,11 +73,11 @@ jobs:
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: as-academy-c-debug
+          name: as-academy-c-debug-maincourse
           path: AS-Academy-C/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload unsigned release candidate
         uses: actions/upload-artifact@v4
         with:
-          name: as-academy-c-release-unsigned
+          name: as-academy-c-release-unsigned-maincourse
           path: AS-Academy-C/app/build/outputs/apk/release/app-release-unsigned.apk
