@@ -2,6 +2,7 @@
 """Validate the Android Course Package before an APK build."""
 from __future__ import annotations
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -24,10 +25,16 @@ def require(condition: bool, message: str):
         errors.append(message)
 
 manifest = load(COURSE / "manifest.json")
+branding = load(COURSE / "branding.json")
 levels = load(COURSE / "levels.json") or []
 chapters = load(COURSE / "chapters.json") or []
 require(isinstance(manifest, dict), "manifest.json must be an object")
 if isinstance(manifest, dict): require(manifest.get("courseId") == "as-academy-c", "manifest courseId must be as-academy-c")
+require(isinstance(branding, dict), "branding.json must be an object")
+if isinstance(branding, dict):
+    for field in ("primaryColorHex", "secondaryColorHex", "accentColorHex"):
+        value = branding.get(field)
+        require(isinstance(value, str) and re.fullmatch(r"#[0-9A-Fa-f]{6}", value) is not None, f"branding {field} must be #RRGGBB")
 require(len(levels) == 4, f"expected 4 levels, found {len(levels)}")
 level_ids = {x.get("id") for x in levels if isinstance(x, dict)}
 require(len(level_ids) == len(levels), "duplicate or missing level id")
@@ -111,4 +118,4 @@ if errors:
     print("COURSE VALIDATION FAILED")
     for error in errors: print(f"- {error}")
     sys.exit(1)
-print(f"COURSE VALIDATION PASSED: {len(lesson_ids)} deep lessons, {len(exercises)} exercises, {len(quizzes)} quizzes, {len(question_ids)} questions, {len(projects)} projects, {len(glossary)} glossary entries")
+print(f"COURSE VALIDATION PASSED: branding + {len(lesson_ids)} deep lessons, {len(exercises)} exercises, {len(quizzes)} quizzes, {len(question_ids)} questions, {len(projects)} projects, {len(glossary)} glossary entries")
